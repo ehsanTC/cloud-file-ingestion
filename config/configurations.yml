@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# Application config
+# ---------------------------------------------------------------------------
+app:
+  name: file-system-ingestiion
+  env: development            # development | staging | production
+  version: 0.1.0
+
+  # HTTP server
+  server:
+    host: 0.0.0.0
+    port: 8080
+
+  # Logging
+  log:
+    level: info               # debug | info | warn | error
+    format: json              # json | text
+
+  # files specifications
+  file_specs:
+    big: 31457280
+    blocked_extensions: []
+
+
+# ---------------------------------------------------------------------------
+# Blob storage (RustFS / S3-compatible)
+# ---------------------------------------------------------------------------
+blob_storage:
+  type: rustfs
+  endpoint: http://localhost:9000
+  region: us-east-1
+  bucket: uploads
+  access_key: rustfsadmin
+  secret_key: change-this-local-secret-123
+  url: "localhost:9000"
+  use_ssl: false
