@@ -29,7 +29,9 @@ func main() {
 
 	r := gin.Default()
 	api.RegisterEndPoints(r, services)
-	err := r.Run()
+
+	address := fmt.Sprintf("%s:%d", conf.App.Server.Host, conf.App.Server.Port)
+	err := r.Run(address)
 
 	if err != nil {
 		fmt.Println(err)
