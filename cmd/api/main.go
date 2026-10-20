@@ -24,7 +24,7 @@ func main() {
 	}
 
 	services := []api.Registrable{
-		file.NewFileHandler(conf, newS3Client(conf)),
+		file.NewFileService(conf, newS3Client(conf)),
 	}
 
 	r := gin.Default()

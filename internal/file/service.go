@@ -16,16 +16,16 @@ import (
 	"github.com/google/uuid"
 )
 
-type FileHandler struct {
+type FileService struct {
 	conf   *config.Config
 	client *s3.Client
 }
 
-func NewFileHandler(conf *config.Config, client *s3.Client) *FileHandler {
-	return &FileHandler{conf: conf, client: client}
+func NewFileService(conf *config.Config, client *s3.Client) *FileService {
+	return &FileService{conf: conf, client: client}
 }
 
-func (h *FileHandler) Upload(c *gin.Context) {
+func (h *FileService) Upload(c *gin.Context) {
 	// limit the file upload size
 	c.Request.Body = http.MaxBytesReader(c.Writer,
 		c.Request.Body,
@@ -61,7 +61,7 @@ func (h *FileHandler) Upload(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"file_id": fileID})
 }
 
-func (h *FileHandler) writeFile(ctx context.Context, header *multipart.FileHeader) (string, error) {
+func (h *FileService) writeFile(ctx context.Context, header *multipart.FileHeader) (string, error) {
 	file, err := header.Open()
 	if err != nil {
 		return "", err
@@ -88,7 +88,7 @@ func (h *FileHandler) writeFile(ctx context.Context, header *multipart.FileHeade
 	return key, nil
 }
 
-func (h *FileHandler) isBlocked(value string) bool {
+func (h *FileService) isBlocked(value string) bool {
 	for _, blocked := range h.conf.App.FileSpecs.BlockedExtensions {
 		if strings.EqualFold(blocked, value) {
 			return true
