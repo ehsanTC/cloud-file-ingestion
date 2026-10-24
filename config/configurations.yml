@@ -34,3 +34,7 @@ blob_storage:
   secret_key: change-this-local-secret-123
   url: "localhost:9000"
   use_ssl: false
+
+database:
+  postgres:
+    dsn: "host=localhost user=root password=secret123 dbname=cloud_files port=5432 sslmode=disable TimeZone=UTC"
